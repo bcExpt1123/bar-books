@@ -1,8 +1,15 @@
 import { readFileSync } from 'fs';
 import { join, resolve } from 'path';
 import sqlite3 from 'sqlite3';
+import { config } from 'dotenv';
 
-const dbPath = resolve(__dirname, '..', './dev.sqlite');
+// Load environment variables based on NODE_ENV
+const envFile = process.env.NODE_ENV === 'production' ? '.env' : '.env.dev';
+config({ path: resolve(__dirname, '..', '..', envFile) });
+
+// Paths must be based on compiled directory structure (usually in dist/)
+const dbPath = resolve(__dirname, '..', process.env.DB_PATH || './dev.sqlite');
+
 const schemaPath = join(__dirname, '..', 'schema', 'schema.sql');
 const seedPath = join(__dirname, '..', 'seed', 'order.sql');
 

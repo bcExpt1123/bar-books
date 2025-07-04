@@ -19,6 +19,8 @@ lerna-debug.log*
 
 # Environment variables
 .env
+.env.dev
+.env.production
 
 # SQLite database
 *.sqlite

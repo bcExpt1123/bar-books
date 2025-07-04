@@ -2,7 +2,9 @@ import { Database } from 'sqlite3';
 import { config } from 'dotenv';
 import { resolve } from 'path';
 
-config();
+// Load environment variables based on NODE_ENV
+const envFile = process.env.NODE_ENV === 'production' ? '.env' : '.env.dev';
+config({ path: resolve(__dirname, '..', '..', envFile) });
 
 const dbPath = resolve(__dirname, '..', process.env.DB_PATH || 'db/dev.sqlite');
 

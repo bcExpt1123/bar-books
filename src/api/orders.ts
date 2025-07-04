@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-const API = axios.create({ baseURL: '/api' });
+const apiUrl = import.meta.env.VITE_API_URL;
+
+const API = axios.create({ baseURL: `${apiUrl}/api` });
 
 export const fetchSummary = () => API.get('/orders/summary');
 export const fetchOrders = (params?: { product?: string; offset?: number, limit?: number }) =>
