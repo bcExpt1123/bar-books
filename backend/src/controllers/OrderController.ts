@@ -19,6 +19,7 @@ export const getSummary = (req: Request, res: Response) => {
 
 export const getOrders = (req: Request, res: Response) => {
   const { product = '', limit = '10', offset = '0' } = req.query;
+
   const filters: string[] = [];
   const params: any[] = [];
 
@@ -29,14 +30,29 @@ export const getOrders = (req: Request, res: Response) => {
 
   const whereClause = filters.length ? `WHERE ${filters.join(' AND ')}` : '';
 
-  db.all<Order[]>(
-      `SELECT * FROM orders ${whereClause} LIMIT ? OFFSET ?`,
-      [...params, Number(limit), Number(offset)],
-      (err, rows) => {
-        if (err) return res.status(500).json({ error: err.message });
-        res.json(rows);
+  const countQuery = `SELECT COUNT(*) as count FROM orders ${whereClause}`;
+  const dataQuery = `SELECT * FROM orders ${whereClause} LIMIT ? OFFSET ?`;
+
+  // First: Get total count
+  db.get(countQuery, params, (countErr, countRow: { count: number }) => {
+    if (countErr) {
+      return res.status(500).json({ error: 'Failed to count orders', details: countErr.message });
+    }
+
+    const totalCount = countRow?.count || 0;
+
+    // Then: Get paginated data
+    db.all(dataQuery, [...params, Number(limit), Number(offset)], (dataErr, rows) => {
+      if (dataErr) {
+        return res.status(500).json({ error: 'Failed to fetch orders', details: dataErr.message });
       }
-  );
+
+      res.json({
+        data: rows,
+        totalCount,
+      });
+    });
+  });
 };
 
 export const createOrder = (req: Request, res: Response) => {
