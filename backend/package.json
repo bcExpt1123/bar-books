@@ -5,9 +5,11 @@
   "main": "src/index.js",
   "scripts": {
     "dev": "nodemon src/server.ts",
-    "build": "tsc",
-    "start": "node dist/index.js",
+    "build": "tsc && npm run copy:sql",
+    "copy:sql": "cpx \"src/db/schema/schema.sql\" dist/src/db/schema/ && cpx \"src/db/seed/order.sql\" dist/src/db/seed/",
+    "start": "node dist/src/server.js",
     "init:db": "ts-node src/db/scripts/init-db.ts",
+    "init:prod": "ts-node dist/src/db/scripts/init-db.js",
     "test": "jest"
   },
   "private": true,
@@ -25,6 +27,7 @@
     "@types/jest": "^30.0.0",
     "@types/morgan": "^1.9.10",
     "@types/node": "^24.0.10",
+    "cpx": "^1.5.0",
     "jest": "^30.0.4",
     "nodemon": "^3.1.10",
     "ts-jest": "^29.4.0",
