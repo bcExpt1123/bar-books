@@ -1,69 +1,100 @@
-# React + TypeScript + Vite
+# Bar Books
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Bar Books is a full-stack order management dashboard built with React, TypeScript, Vite, and a Node.js/Express backend using SQLite. It provides a simple interface for tracking, summarizing, and analyzing orders, making it ideal for use in bar or beverage service environments.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Order Dashboard**: View a live summary of sales, best-selling products, and order statistics.
+- **Order Management**: Add new orders and view a paginated list of all orders.
+- **Summary Statistics**: Instantly see total revenue, median order value, top product by quantity sold, and number of unique products.
+- **Backend API**: RESTful endpoints for creating and fetching orders and summary data.
+- **Data Persistence**: Uses SQLite for fast and easy local storage, with initialization scripts and mock data for development.
+- **TypeScript Throughout**: Strong type safety on both client and server.
+- **Modern Tooling**: Built with Vite for fast frontend development and hot module reload.
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Prerequisites
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- Node.js (18+ recommended)
+- Yarn or npm
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+### Installation
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/bcExpt1123/bar-books.git
+   cd bar-books
+   ```
+
+2. **Install dependencies**
+   ```bash
+   yarn install
+   # or
+   npm install
+   ```
+
+3. **Setup the backend**
+   ```bash
+   cd backend
+   yarn install
+   # or
+   npm install
+   # Initialize the database with schema and seed data
+   yarn init:db
+   ```
+
+4. **Run the backend server**
+   ```bash
+   yarn dev
+   # or
+   npm run dev
+   ```
+   > By default, the backend runs on `http://localhost:3001`
+
+5. **Start the frontend**
+   ```bash
+   cd ..
+   yarn dev
+   # or
+   npm run dev
+   ```
+   > The frontend runs on `http://localhost:5173` and proxies API requests to the backend.
+
+## Project Structure
+
+```
+bar-books/
+  ├── backend/                # Express backend, SQLite DB, API routes and services
+  │   ├── src/
+  │   ├── tests/
+  │   └── ...
+  ├── src/                    # React frontend source code
+  │   ├── components/
+  │   ├── api/
+  │   ├── hooks/
+  │   └── ...
+  ├── public/
+  ├── index.html              # Vite entry point
+  └── ...
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## API Overview
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- `GET /api/orders` — List orders (with optional filters)
+- `POST /api/orders` — Create a new order
+- `GET /api/orders/summary` — Get dashboard statistics
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Development
+
+- **Frontend:** React, TypeScript, Vite, Axios, ESLint
+- **Backend:** Express, TypeScript, SQLite, dotenv
+- **Linting:** Pre-configured with ESLint for TypeScript and React. Extend via `eslint.config.js`.
+
+## License
+
+This project is private and does not currently specify a license.
+
+---
+
+_This project was generated with a Vite + React + TypeScript template and customized for order management and analytics in bar environments._
