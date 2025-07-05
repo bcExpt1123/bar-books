@@ -61,6 +61,23 @@ Bar Books is a full-stack order management dashboard built with React, TypeScrip
    ```
    > The frontend runs on `http://localhost:5173` and proxies API requests to the backend.
 
+6. **Start the frontend and backend**
+   ```bash
+   yarn dev
+   # or
+   npm run dev
+   ```
+   > The frontend runs on `http://localhost:5173` and proxies API requests to the backend and the backend runs on `http://localhost:3001`.
+
+7. **Unit Testing**
+   To run all unit tests, use either of the following commands:
+
+   ```bash
+   yarn test
+   # or
+   npm run test
+   ```
+   
 ## Project Structure
 
 ```
